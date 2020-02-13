@@ -1,0 +1,16 @@
+---
+# vars file for vhost_role
+packages_install:
+  - libselinux-python
+  - bash-completion
+  - tree
+  - firewalld
+  - httpd
+
+service_state: started
+
+service_start:
+  - firewalld
+  - httpd
+
+fw_services: http

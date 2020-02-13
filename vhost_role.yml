@@ -1,0 +1,6 @@
+---
+
+- hosts: web1
+  tasks:
+    - include_role:
+        name: vhost_role

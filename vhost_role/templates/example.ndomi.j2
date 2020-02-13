@@ -1,0 +1,7 @@
+<VirtualHost *:80>
+  ServerName {{ansible_hostname}}
+  ServerAlias example.ndomi
+  DocumentRoot /var/www/example_ndomi
+  ErrorLog /var/log/httpd/example_ndomi_error.log
+  CustomLog /var/log/httpd/example_ndomi_access.log combined
+</VirtualHost> 

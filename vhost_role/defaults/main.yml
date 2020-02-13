@@ -1,0 +1,5 @@
+---
+# defaults file for vhost_role
+installed: present
+default_policy: targeted
+default_mode: permissive

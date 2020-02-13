@@ -1,0 +1,45 @@
+---
+# tasks file for vhost_role
+
+  - name: Install Packages
+    package:
+      name: '{{ item }}'
+      state: '{{ installed }}'
+    loop: '{{ packages_install }}'
+
+  - name: Put Selinux to permissive state
+    selinux:
+      policy: '{{ default_policy }}'
+      state: '{{ default_mode }}'
+
+  - name: start services
+    service:
+      name: '{{ item }}'
+      state: '{{ service_state }}' 
+    loop: '{{ service_start }}'
+
+  - firewalld: 
+      service: '{{ fw_services }}'
+      permanent: true
+      immediate: yes
+      state: enabled
+
+  - name: Creating a directory
+    file:
+      path: /var/www/example_ndomi
+      state: directory
+      recurse: yes
+      owner: apache
+      group: apache
+
+  - name: Create a vhost
+    template:
+      src: example.ndomi.j2
+      dest: /etc/httpd/conf.d/example.ndomi.conf
+    notify: restart apache
+
+  - name: create a index file
+    template:
+      src: index.html.j2
+      dest: /var/www/example_ndomi/index.html
+    notify: restart apache
